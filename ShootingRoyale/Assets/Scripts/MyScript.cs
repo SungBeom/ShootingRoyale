@@ -6,7 +6,7 @@ public class MyScript : MonoBehaviour
 {
 
     protected Joystick joystick;
-    protected Joybutton joybutton;
+    protected FixedButton joybutton;
 
     protected bool jump;
 
@@ -14,7 +14,7 @@ public class MyScript : MonoBehaviour
     void Start()
     {
         joystick = FindObjectOfType<Joystick>();
-        joybutton = FindObjectOfType<Joybutton>();
+        joybutton = FindObjectOfType<FixedButton>();
     }
 
     // Update is called once per frame

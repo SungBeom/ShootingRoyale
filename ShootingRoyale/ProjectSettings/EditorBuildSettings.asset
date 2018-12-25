@@ -9,5 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/NetworkManager.unity
     guid: e46740f3b973d5848a62c56e93020ad9
   - enabled: 1
-    path: Assets/Scenes/MoveTest.unity
-    guid: 60a09927a97225545b986f65262bc8de
+    path: Assets/Scenes/MoveController.unity
+    guid: aafd42702a8eabe44a21dfb3c2837f25
+  m_configObjects: {}
