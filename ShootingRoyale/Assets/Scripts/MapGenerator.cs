@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class MapGenerator : MonoBehaviour {
 
@@ -118,6 +119,31 @@ public class MapGenerator : MonoBehaviour {
         maskBottom.localScale = new Vector3(maxMapSize.x, 1, (maxMapSize.y - currentMap.mapSize.y) / 2f) * tileSize;
 
         navmeshFloor.localScale = new Vector3(maxMapSize.x, maxMapSize.y) * tileSize;
+
+        // Creating wall
+        GameObject wall1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wall1.transform.position = new Vector3(maskLeft.position.x - 0.5f, maskLeft.position.y + 5 * tileSize, maskLeft.position.z);
+        wall1.transform.parent = mapHolder;
+        wall1.transform.localScale = new Vector3((maxMapSize.x - currentMap.mapSize.x + 1) / 2f, 10, currentMap.mapSize.y) * tileSize;
+        wall1.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+
+        GameObject wall2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wall2.transform.position = new Vector3(maskRight.position.x + 0.5f, maskRight.position.y + 5 * tileSize, maskRight.position.z);
+        wall2.transform.parent = mapHolder;
+        wall2.transform.localScale = new Vector3((maxMapSize.x - currentMap.mapSize.x + 1) / 2f, 10, currentMap.mapSize.y) * tileSize;
+        wall2.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+
+        GameObject wall3 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wall3.transform.position = new Vector3(maskTop.position.x, maskTop.position.y + 5 * tileSize, maskTop.position.z + 0.5f);
+        wall3.transform.parent = mapHolder;
+        wall3.transform.localScale = new Vector3(maxMapSize.x, 10, (maxMapSize.y - currentMap.mapSize.y + 1) / 2f) * tileSize;
+        wall3.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+
+        GameObject wall4 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wall4.transform.position = new Vector3(maskBottom.position.x, maskBottom.position.y + 5 * tileSize, maskBottom.position.z - 0.5f);
+        wall4.transform.parent = mapHolder;
+        wall4.transform.localScale = new Vector3(maxMapSize.x, 10, (maxMapSize.y - currentMap.mapSize.y + 1) / 2f) * tileSize;
+        wall4.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
     }
 
     bool MapIsFullyAccessible(bool[,] obstacleMap, int currentObstacleCount)
