@@ -17,4 +17,10 @@ public class ChangeGun : MonoBehaviour
         guns[selected].SetActive(true);
         temp = selected;
     }
+
+    public void Select(int num)
+    {
+        selected = num;
+        Change();
+    }
 }
