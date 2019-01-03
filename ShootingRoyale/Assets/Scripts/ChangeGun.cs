@@ -23,4 +23,9 @@ public class ChangeGun : MonoBehaviour
         selected = num;
         Change();
     }
+
+    public int GetSelect()
+    {
+        return selected;
+    }
 }
