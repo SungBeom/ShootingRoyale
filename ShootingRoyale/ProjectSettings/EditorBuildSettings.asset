@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MoveController.unity
     guid: aafd42702a8eabe44a21dfb3c2837f25
   - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: d0d2d97cee9d6614498bb6f31b0ba887
+  - enabled: 1
     path: Assets/Scenes/ShootingRoyale.unity
     guid: 27ce517b2427d584da1b42f4678c0b09
   m_configObjects: {}
