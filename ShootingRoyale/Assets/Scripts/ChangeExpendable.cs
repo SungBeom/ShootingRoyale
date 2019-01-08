@@ -9,13 +9,14 @@ public class ChangeExpendable : MonoBehaviour
     //int count = 1;
     //public Button btn;
     //public GameObject go;
-    public delegate void UseFunction();
+    delegate void UseFunction();
     UseFunction[] useFunction;
 
     void Start()
     {
         // GetComponent<Text>().text = "" + count;
         transform.GetChild(0).GetComponent<Text>().text = "3";
+
         useFunction = new UseFunction[]
         {
             new UseFunction(UseFirstAidKit),

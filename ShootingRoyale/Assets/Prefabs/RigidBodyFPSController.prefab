@@ -56,7 +56,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.6
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -193,7 +193,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960322167}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0.00000028088027}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -201,7 +201,7 @@ Transform:
   - {fileID: 7467094710900361632}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 179.99998, z: 0}
 --- !u!54 &960322171
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -228,7 +228,7 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -246,10 +246,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 853025706}
   movementSettings:
-    ForwardSpeed: 8
-    BackwardSpeed: 4
-    StrafeSpeed: 4
-    RunMultiplier: 2
+    ForwardSpeed: 4
+    BackwardSpeed: 2
+    StrafeSpeed: 2
+    RunMultiplier: 1.5
     RunKey: 304
     JumpForce: 50
     SlopeCurveModifier:
@@ -320,6 +320,7 @@ MonoBehaviour:
   JumpButton: {fileID: 0}
   TouchField: {fileID: 0}
   ExpendableBtn: []
+  GunBtn: []
 --- !u!1 &2029158029221624932
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,7 +604,7 @@ MonoBehaviour:
   - {fileID: 62511314202914326}
   - {fileID: 4157481537378078984}
   - {fileID: 6863358715333370407}
-  selected: 4
+  selected: 0
 --- !u!1 &6894393214456089934
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,7 +796,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 100
+  m_Value: 50.8
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
