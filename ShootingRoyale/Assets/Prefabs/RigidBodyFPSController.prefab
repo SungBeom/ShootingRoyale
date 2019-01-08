@@ -319,6 +319,7 @@ MonoBehaviour:
   MoveJoystick: {fileID: 0}
   JumpButton: {fileID: 0}
   TouchField: {fileID: 0}
+  ExpendableBtn: []
 --- !u!1 &2029158029221624932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,7 +1115,7 @@ PrefabInstance:
     - target: {fileID: 591910673753970544, guid: 875e4be309de24b4e92a1c13e562efa8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 591910673753970544, guid: 875e4be309de24b4e92a1c13e562efa8,
         type: 3}

@@ -18,9 +18,9 @@ public class ChangeExpendable : MonoBehaviour
         transform.GetChild(0).GetComponent<Text>().text = "3";
         useFunction = new UseFunction[]
         {
-            new UseFunction(UsePotion),
+            new UseFunction(UseFirstAidKit),
             new UseFunction(UseAdrenaline),
-            new UseFunction(ThrowGrenade)
+            new UseFunction(UseSmokeShell)
         };
     }
 
@@ -90,7 +90,7 @@ public class ChangeExpendable : MonoBehaviour
     //    }
     //}
 
-    void UsePotion()
+    void UseFirstAidKit()
     {
 
     }
@@ -100,7 +100,7 @@ public class ChangeExpendable : MonoBehaviour
 
     }
 
-    void ThrowGrenade()
+    void UseSmokeShell()
     {
 
     }
