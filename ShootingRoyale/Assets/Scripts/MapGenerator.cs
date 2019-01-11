@@ -10,6 +10,7 @@ public class MapGenerator : MonoBehaviour {
 
     public Transform tilePrefab;
     public Transform obstaclePrefab;
+    public Expendable[] expendablePrefab;
     public Transform navmeshFloor;
     public Transform navmeshMaskPrefab;
     public Vector2 maxMapSize;
@@ -18,8 +19,8 @@ public class MapGenerator : MonoBehaviour {
     public float outlinePercent;
 
     public float tileSize;
-    List<Coord> allTileCoords;
-    Queue<Coord> shuffledTileCoords;
+    List<Coord> allTileCoords, expendableCoords;
+    Queue<Coord> shuffledTileCoords, shuffledExpendableCoords;
 
     Map currentMap;
     
@@ -99,6 +100,35 @@ public class MapGenerator : MonoBehaviour {
                 obstacleMap[randomCoord.x, randomCoord.y] = false;
                 currentObstacleCount--;
             }
+        }
+
+        // Spawning expendables
+        int expendableCount = 20;
+
+        expendableCoords = new List<Coord>();
+        for (int i = 0; i < (int)currentMap.mapSize.x; i++)
+        {
+            for (int j = 0; j < (int)currentMap.mapSize.y; j++)
+            {
+                if (obstacleMap[i, j] == false)
+                {
+                    expendableCoords.Add(new Coord(i, j));
+                }
+            }
+        }
+        shuffledExpendableCoords = new Queue<Coord>(Utility.ShuffleArray(expendableCoords.ToArray(), 0));
+
+        if (shuffledExpendableCoords.Count - 2 < expendableCount) expendableCount = shuffledExpendableCoords.Count - 2;
+        for (int i = 0; i < expendableCount; i++)
+        {
+            Coord expendableCoord = shuffledExpendableCoords.Dequeue();
+            Vector3 expendablePosition = CoordToPosition(expendableCoord.x, expendableCoord.y);
+            
+            // 현재 배열 길이를 이용하여 1:1 비율로 생성하고 있음
+            // 가중치를 이용하는 방식으로 변경 예정
+            Transform newExpendable = Instantiate(expendablePrefab[i % expendablePrefab.Length].expendablePrefab, expendablePosition, Quaternion.identity) as Transform;
+            newExpendable.parent = mapHolder;
+            newExpendable.localScale = new Vector3(tileSize / 2.0f, tileSize / 2.0f, tileSize / 2.0f);
         }
 
         // Creating navmesh mask
@@ -238,5 +268,12 @@ public class MapGenerator : MonoBehaviour {
                 return new Coord(mapSize.x / 2, mapSize.y / 2);
             }
         }
+    }
+
+    [System.Serializable]
+    public class Expendable
+    {
+        public Transform expendablePrefab;
+        public int weight;
     }
 }
