@@ -25,6 +25,8 @@ public class ExpendableControl : MonoBehaviour
     [Range(1, 10)]
     public float accelerationRate;
 
+    bool isBuffed;
+
     public void UseFirstAidKit()
     {
         Debug.Log(health.maxValue);
@@ -36,19 +38,23 @@ public class ExpendableControl : MonoBehaviour
 
     public void UseAdrenaline()
     {
-        Debug.Log("UseAdrenaline - (" + accelerationTime + ", " + accelerationRate + ")");
+        if (isBuffed == false)
+        {
+            Debug.Log("UseAdrenaline - (" + accelerationTime + ", " + accelerationRate + ")");
+            isBuffed = true;
 
-        movementSettings.ForwardSpeed = controller.movementSettings.ForwardSpeed;
-        movementSettings.BackwardSpeed = controller.movementSettings.BackwardSpeed;
-        movementSettings.StrafeSpeed = controller.movementSettings.StrafeSpeed;
-        movementSettings.JumpForce = controller.movementSettings.JumpForce;
+            movementSettings.ForwardSpeed = controller.movementSettings.ForwardSpeed;
+            movementSettings.BackwardSpeed = controller.movementSettings.BackwardSpeed;
+            movementSettings.StrafeSpeed = controller.movementSettings.StrafeSpeed;
+            movementSettings.JumpForce = controller.movementSettings.JumpForce;
 
-        controller.movementSettings.ForwardSpeed *= accelerationRate;
-        controller.movementSettings.BackwardSpeed *= accelerationRate;
-        controller.movementSettings.StrafeSpeed *= accelerationRate;
-        controller.movementSettings.JumpForce *= accelerationRate;
+            controller.movementSettings.ForwardSpeed *= accelerationRate;
+            controller.movementSettings.BackwardSpeed *= accelerationRate;
+            controller.movementSettings.StrafeSpeed *= accelerationRate;
+            controller.movementSettings.JumpForce *= accelerationRate;
 
-        Invoke("CalmDown", accelerationTime);
+            Invoke("CalmDown", accelerationTime);
+        }
     }
 
     public void UseSmokeShell()
@@ -64,5 +70,7 @@ public class ExpendableControl : MonoBehaviour
         controller.movementSettings.BackwardSpeed = movementSettings.BackwardSpeed;
         controller.movementSettings.StrafeSpeed = movementSettings.StrafeSpeed;
         controller.movementSettings.JumpForce = movementSettings.JumpForce;
+
+        isBuffed = false;
     }
 }
