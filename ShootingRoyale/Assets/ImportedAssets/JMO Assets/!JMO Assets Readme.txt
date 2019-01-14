@@ -11,7 +11,7 @@ if you need support.
 
 "Window > JMO Assets > Check for updates"
 ------------------------------------------
-Open a window that checks for updates by comparing your local version with the current
+Opens a window that checks for updates by comparing your local version with the current
 Asset Store version, and brings you to the product Asset Store page in one click!
 The Readme files are used to check the local version, so the plugin will not see the
 local version if these are deleted.
