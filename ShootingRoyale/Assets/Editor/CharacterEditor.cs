@@ -8,16 +8,16 @@ public class CharacterEditor : Editor {
 
     public override void OnInspectorGUI()
     {
-        ChangeGun gun = target as ChangeGun;
+        GunController gunController = target as GunController;
 
         if (DrawDefaultInspector())
         {
-            gun.Change();
+            gunController.Change();
         }
 
         if (GUILayout.Button("Change Gun"))
         {
-            gun.Change();
+            gunController.Change();
         }
     }
 }

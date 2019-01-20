@@ -246,10 +246,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1990330368561057816}
     m_Modifications:
-    - target: {fileID: 100002, guid: acade480ec18aed4d95a5abc17649351, type: 3}
-      propertyPath: m_Name
-      value: WFXMR_MF Spr RIFLE4
-      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: acade480ec18aed4d95a5abc17649351, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -305,6 +301,10 @@ PrefabInstance:
     - target: {fileID: 400002, guid: acade480ec18aed4d95a5abc17649351, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: acade480ec18aed4d95a5abc17649351, type: 3}
+      propertyPath: m_Name
+      value: WFXMR_MF Spr RIFLE4
       objectReference: {fileID: 0}
     - target: {fileID: 19800002, guid: acade480ec18aed4d95a5abc17649351, type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState
