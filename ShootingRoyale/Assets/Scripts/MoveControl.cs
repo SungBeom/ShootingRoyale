@@ -50,9 +50,30 @@ public class MoveControl : MonoBehaviour
             col.transform.parent.eulerAngles = new Vector3(0f, col.transform.parent.eulerAngles.y + 90f, 0f);
 
             col.gameObject.GetComponent<Animator>().SetTrigger("Get_t");
-            getBox[index]();
-            Destroy(col.transform.parent.gameObject, 1f);
+            StartCoroutine("Interact", col.transform.parent.Find("Interaction"));
+            StartCoroutine("Disappear", col.gameObject);
+            StartCoroutine("GetItem", index);
+            Destroy(col.transform.parent.gameObject, 1.5f);
         }
+    }
+
+    IEnumerator Interact(Transform interaction)
+    {
+        yield return new WaitForSeconds(0.9f);
+        interaction.gameObject.SetActive(true);
+        interaction.GetComponent<ParticleSystem>().Play();
+    }
+
+    IEnumerator Disappear(GameObject boxPrefab)
+    {
+        yield return new WaitForSeconds(1.0f);
+        boxPrefab.SetActive(false);
+    }
+
+    IEnumerator GetItem(int index)
+    {
+        yield return new WaitForSeconds(1.0f);
+        getBox[index]();
     }
 
     void GetExpendable()

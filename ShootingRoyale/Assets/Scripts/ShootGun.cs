@@ -22,7 +22,7 @@ public class ShootGun : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 
     IEnumerator ShootEffect()
     {
-        ParticleSystem ps = GunPos.transform.GetChild(selected).Find("Bullet Spawn").GetChild(0).transform.GetComponent<ParticleSystem>();
+        ParticleSystem ps = GunPos.transform.GetChild(selected).Find("Bullet Spawn").GetChild(0).GetComponent<ParticleSystem>();
 
         ps.Clear();
         ps.Play();
