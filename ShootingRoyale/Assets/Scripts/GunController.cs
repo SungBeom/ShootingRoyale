@@ -8,7 +8,9 @@ public class GunController : MonoBehaviour
     public Gun[] guns;
 
     // 테스트용 bullet, GunManager의 pool에서 가져오는 것으로 변경할 것
-    public GameObject bulletPrefab;
+    //public GameObject bulletPrefab;
+
+    MakePool makePool;
 
     [Range(0, 3)]               // 4 대신 (guns.Length - 1)을 넣는 것이 합당함
     public int selected;
@@ -34,13 +36,19 @@ public class GunController : MonoBehaviour
     {
         // 아래의 코드는 현재 테스트 코드, pool을 사용하는 코드로 변경할 것
         // num은 어떤 총의 총알을 쏘느냐에 대한 정보
-        GameObject bullet = Instantiate(bulletPrefab, Camera.main.transform.position, Camera.main.transform.rotation);
+        //GameObject bullet = Instantiate(bulletPrefab, Camera.main.transform.position, Camera.main.transform.rotation);
         //bulletPrefab.transform.position = Camera.main.transform.position;
         //bulletPrefab.transform.rotation = Camera.main.transform.rotation;
-
+        makePool = GameObject.Find("PoolManager").GetComponent<MakePool>();
+        GameObject bullet = makePool.PoolList[num].Dequeue();
+        bullet.transform.position = Camera.main.transform.position;
+        bullet.transform.rotation = Camera.main.transform.rotation;
+        bullet.SetActive(true);
         bullet.GetComponent<Renderer>().enabled = false;
         bullet.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 1000f);
         StartCoroutine(AppearBullet(bullet));
+        bullet.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        makePool.PoolList[num].Enqueue(bullet);
         // Invoke("AppearBullet", 0.1f);
     }
 

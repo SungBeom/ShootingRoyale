@@ -14,19 +14,32 @@ public class Bullet : MonoBehaviour
         if (hit.tag.Equals("Character"))
         {
             Debug.Log("Character Hit!");
-            Destroy(gameObject);
+            StartCoroutine(BulletInvisible(gameObject, 0.1f));
         }
         else if (hit.tag.Equals("GunBox"))
         {
             Debug.Log("GunBox Hit!");
-            Destroy(gameObject);
+            StartCoroutine(BulletInvisible(gameObject, 0.1f));
         }
-        else if(hit.tag.Equals("ExpendableBox"))
+        else if (hit.tag.Equals("ExpendableBox"))
         {
             Debug.Log("ExpendableBox Hit!");
-            Destroy(gameObject);
+            StartCoroutine(BulletInvisible(gameObject, 0.1f));
         }
+        else if (hit.tag.Equals("Untagged"))
+        {
+            Debug.Log("기타 명중");
+            StartCoroutine(BulletInvisible(gameObject, 0.1f));
+        }
+        else
+        {
+            StartCoroutine(BulletInvisible(gameObject, 2.0f));
+        }
+    }
 
-        Destroy(gameObject, 2.0f);
+    IEnumerator BulletInvisible(GameObject _obj, float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        _obj.SetActive(false);
     }
 }
