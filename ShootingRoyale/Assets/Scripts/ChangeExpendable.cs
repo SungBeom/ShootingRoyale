@@ -13,7 +13,7 @@ public class ChangeExpendable : MonoBehaviour
     void Start()
     {
         // 테스트를 위해 임의로 초기화
-        transform.GetChild(0).GetComponent<Text>().text = "3";
+        transform.GetChild(0).GetComponent<Text>().text = "10";
 
         expendableControl = transform.parent.GetComponent<ExpendableControl>();
 
