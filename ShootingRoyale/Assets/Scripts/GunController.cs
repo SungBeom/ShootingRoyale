@@ -40,7 +40,7 @@ public class GunController : MonoBehaviour
         //bulletPrefab.transform.position = Camera.main.transform.position;
         //bulletPrefab.transform.rotation = Camera.main.transform.rotation;
         makePool = GameObject.Find("PoolManager").GetComponent<MakePool>();
-        GameObject bullet = makePool.PoolList[num].Dequeue();
+        GameObject bullet = makePool.poolList[num].Dequeue();
         bullet.transform.position = Camera.main.transform.position;
         bullet.transform.rotation = Camera.main.transform.rotation;
         bullet.SetActive(true);
@@ -48,7 +48,7 @@ public class GunController : MonoBehaviour
         bullet.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 1000f);
         StartCoroutine(AppearBullet(bullet));
         bullet.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        makePool.PoolList[num].Enqueue(bullet);
+        makePool.poolList[num].Enqueue(bullet);
         // Invoke("AppearBullet", 0.1f);
     }
 

@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class MakePool : MonoBehaviour
 {
-    public GameObject[] BulletPrefab;
-    public Queue<GameObject>[] PoolList;    // 최초 사이즈 조절을 못하나?
-    public Queue<GameObject> BulletPool;    // 현재 기준 4개 생성해서 PoolList에 집어넣어야 함
+    public GameObject[] bulletPrefab;
+    public Queue<GameObject>[] poolList;
+    public Queue<GameObject> bulletPool;
 
-    public int[] BulletCount;
+    public int[] bulletCount;
 
-    void Start()                            //  시작과 동시에 생성해서 PoolLIst에 집어 넣어준다
+    void Start()
     {
-        PoolList = new Queue<GameObject>[4];
-        PoolList[0] = new Queue<GameObject>(SetBullet(BulletPrefab[0], 10, "Ak-47"));
-        PoolList[1] = new Queue<GameObject>(SetBullet(BulletPrefab[1], 8, "M4A1"));
-        PoolList[2] = new Queue<GameObject>(SetBullet(BulletPrefab[2], 6, "Skorpion"));
-        PoolList[3] = new Queue<GameObject>(SetBullet(BulletPrefab[3], 4, "UMP-45"));
+        poolList = new Queue<GameObject>[4];
+
+        poolList[0] = new Queue<GameObject>(SetBullet(bulletPrefab[0], bulletCount[0], "Ak-47"));
+        poolList[1] = new Queue<GameObject>(SetBullet(bulletPrefab[1], bulletCount[1], "M4A1"));
+        poolList[2] = new Queue<GameObject>(SetBullet(bulletPrefab[2], bulletCount[2], "Skorpion"));
+        poolList[3] = new Queue<GameObject>(SetBullet(bulletPrefab[3], bulletCount[3], "UMP-45"));
     }
 
     Queue<GameObject> SetBullet(GameObject _Bullet, int _BulletCount, string _name)
     {
-        BulletPool = new Queue<GameObject>();
+        bulletPool = new Queue<GameObject>();
         GameObject Magazine = new GameObject(_name);
 
         for (int i = 0; i < _BulletCount; i++)
@@ -29,8 +30,9 @@ public class MakePool : MonoBehaviour
             GameObject Bullet = Instantiate(_Bullet) as GameObject;
             Bullet.SetActive(false);
             Bullet.transform.parent = Magazine.transform;
-            BulletPool.Enqueue(Bullet);
+            bulletPool.Enqueue(Bullet);
         }
-        return BulletPool;
+
+        return bulletPool;
     }
 }
