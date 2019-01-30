@@ -10,6 +10,7 @@ public class MapGenerator : MonoBehaviour {
 
     public Transform tilePrefab;
     public Transform obstaclePrefab;
+    public int expendableCount;
     public Expendable[] expendablePrefab;
     public Transform navmeshFloor;
     public Transform navmeshMaskPrefab;
@@ -103,8 +104,6 @@ public class MapGenerator : MonoBehaviour {
         }
 
         // Spawning expendables
-        int expendableCount = 20;
-
         expendableCoords = new List<Coord>();
         for (int i = 0; i < (int)currentMap.mapSize.x; i++)
         {
@@ -119,14 +118,37 @@ public class MapGenerator : MonoBehaviour {
         shuffledExpendableCoords = new Queue<Coord>(Utility.ShuffleArray(expendableCoords.ToArray(), 0));
 
         if (shuffledExpendableCoords.Count - 2 < expendableCount) expendableCount = shuffledExpendableCoords.Count - 2;
+
+        int[] expendablesCount = new int[expendablePrefab.Length];
+        int maxWeight = 0;
+        for (int i = 0; i < expendablePrefab.Length; i++)
+            if (expendablePrefab[i].weight == 0) expendablePrefab[i].weight = 1;
+
+        for (int i = 0; i < expendablePrefab.Length; i++) maxWeight += expendablePrefab[i].weight;
+        for (int i = 0; i < expendablePrefab.Length - 1; i++)
+            expendablesCount[i] = (int)Mathf.Round((float)expendablePrefab[i].weight / maxWeight * expendableCount);
+        expendablesCount[expendablePrefab.Length - 1] = expendableCount;
+        for (int i = 0; i < expendablePrefab.Length - 1; i++)
+            expendablesCount[expendablePrefab.Length - 1] -= expendablesCount[i];
+
+        int[] expendableIndex = new int[expendableCount];
+        int indexCount = 0;
+        int index = 0;
+        for (int i = 0; i < expendablePrefab.Length; i++)
+        {
+            for (int j = indexCount; j < indexCount + expendablesCount[i]; j++)
+                expendableIndex[j] = index;
+
+            indexCount += expendablesCount[i];
+            index++;
+        }
+
         for (int i = 0; i < expendableCount; i++)
         {
             Coord expendableCoord = shuffledExpendableCoords.Dequeue();
             Vector3 expendablePosition = CoordToPosition(expendableCoord.x, expendableCoord.y);
-            
-            // 현재 배열 길이를 이용하여 1:1 비율로 생성하고 있음
-            // 가중치를 이용하는 방식으로 변경 예정
-            Transform newExpendable = Instantiate(expendablePrefab[i % expendablePrefab.Length].expendablePrefab, expendablePosition, Quaternion.identity) as Transform;
+
+            Transform newExpendable = Instantiate(expendablePrefab[expendableIndex[i]].expendablePrefab, expendablePosition, Quaternion.identity) as Transform;
             newExpendable.parent = mapHolder;
             newExpendable.localScale = new Vector3(tileSize / 2.0f, tileSize / 2.0f, tileSize / 2.0f);
         }
