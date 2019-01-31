@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GunController : MonoBehaviour
 {
@@ -10,11 +11,21 @@ public class GunController : MonoBehaviour
     // 테스트용 bullet, GunManager의 pool에서 가져오는 것으로 변경할 것
     //public GameObject bulletPrefab;
 
-    MakePool makePool;
+    public MakePool makePool;  // poolManager 넣는 장소
+    public ShootGun shootGun;
 
     [Range(0, 3)]               // 4 대신 (guns.Length - 1)을 넣는 것이 합당함
     public int selected;
+    public int currentBullet;
+    public string maxBullet;
+    public Text text;
     int temp;
+
+    /*void Start()
+    {
+        //makePool = makePool.GetComponent<MakePool>();
+        //shootGun = shootGun.GetComponent<ShootGun>();
+    }*/
 
     public void Change()
     {
@@ -23,6 +34,10 @@ public class GunController : MonoBehaviour
         guns[temp].gunPrefab.SetActive(false);
         guns[selected].gunPrefab.SetActive(true);
         temp = selected;
+        shootGun.shootPossible = true;
+        currentBullet = guns[selected].bulletCount;
+        maxBullet = guns[selected].bulletCount.ToString();
+        text.text = maxBullet + "/" + maxBullet;
     }
 
     public void Select(int num)
@@ -39,17 +54,22 @@ public class GunController : MonoBehaviour
         //GameObject bullet = Instantiate(bulletPrefab, Camera.main.transform.position, Camera.main.transform.rotation);
         //bulletPrefab.transform.position = Camera.main.transform.position;
         //bulletPrefab.transform.rotation = Camera.main.transform.rotation;
-        makePool = GameObject.Find("PoolManager").GetComponent<MakePool>();
+        currentBullet--;
+        text.text = currentBullet.ToString() + "/" + maxBullet;
+
         GameObject bullet = makePool.poolList[num].Dequeue();
         bullet.transform.position = Camera.main.transform.position;
         bullet.transform.rotation = Camera.main.transform.rotation;
+
         bullet.SetActive(true);
         bullet.GetComponent<Renderer>().enabled = false;
-        bullet.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 1000f);
+
+        bullet.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * guns[selected].bulletSpeed);
+
         StartCoroutine(AppearBullet(bullet));
-        bullet.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        makePool.poolList[num].Enqueue(bullet);
-        // Invoke("AppearBullet", 0.1f);
+        StartCoroutine(BulletInvisibleDelay(bullet, guns[selected].bulletDuration, num));
+
+        if (currentBullet == 0) { StartCoroutine(ReloadBullet(guns[selected].reloadDelay)); }
     }
 
     IEnumerator AppearBullet(GameObject bullet)
@@ -58,20 +78,35 @@ public class GunController : MonoBehaviour
         bullet.GetComponent<Renderer>().enabled = true;
     }
 
-    //void AppearBullet(GameObject bullet)
-    //{
-    //    bullet.SetActive(true);
-    //    yield return new WaitForSeconds(0.1f);
-    //}
+    IEnumerator BulletInvisibleDelay(GameObject bullet, float time, int num)
+    {
+        yield return new WaitForSeconds(time);
+        bullet.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        bullet.SetActive(false);
+        makePool.poolList[num].Enqueue(bullet);
+    }
+
+    IEnumerator ReloadBullet(float time)
+    {
+        shootGun.shootPossible = false;
+        yield return new WaitForSeconds(time);
+        currentBullet = int.Parse(maxBullet);
+        text.text = maxBullet + "/" + maxBullet;
+        shootGun.shootPossible = true;
+
+    }
 
     [System.Serializable]
     public class Gun
     {
         public GameObject gunPrefab;
-        public Transform BulletPrefab;
 
-        public float BulletSpped;
-        public int BulletCount;
-        public int BulletDamage;
+        public float bulletSpeed;
+        public float bulletDuration;
+        public float shootDelay;
+        public float reloadDelay;
+
+        public int bulletCount;
+        public int bulletDamage;
     }
 }

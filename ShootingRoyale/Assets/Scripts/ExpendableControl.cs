@@ -7,6 +7,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class ExpendableControl : MonoBehaviour
 {
     public Slider health;
+    public Slider healthUi;
     // 현재 사람의 속도를 증가시키나 총 속도를 증가시키는 쪽으로 변경 예정
     public RigidbodyFirstPersonController controller;
     public GameObject smokeShellPrefab;
@@ -42,6 +43,8 @@ public class ExpendableControl : MonoBehaviour
 
         if (health.value >= health.maxValue - healingAmount) health.value = health.maxValue;
         else health.value += healingAmount;
+
+        healthUi.value = health.value;
     }
 
     public void UseAdrenaline()

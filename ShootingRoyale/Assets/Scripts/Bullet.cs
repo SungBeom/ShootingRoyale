@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour
 {
@@ -11,35 +12,24 @@ public class Bullet : MonoBehaviour
 
         // 내 캐릭터면 쏘자마자 없어짐, 여기선 적 캐릭터를 의미함
         // 네트워크 코드로 조절해야 할 듯함
-        if (hit.tag.Equals("Character"))
+        if (hit.tag.Equals("Player"))
         {
-            Debug.Log("Character Hit!");
-            StartCoroutine(BulletInvisible(gameObject, 0.1f));
+            hit.transform.Find("Canvas").Find("Health Slider").GetComponent<Slider>().value -= 10;  // 건 컨트룰러의 총알 데미지에 접근해야하는데 접근 할 수가 없음 -> 총알마다 다른 프리팹일 경우 프리팹안에 값을 미리 넣어둘수 있을듯
+            gameObject.SetActive(false);
         }
         else if (hit.tag.Equals("GunBox"))
         {
             Debug.Log("GunBox Hit!");
-            StartCoroutine(BulletInvisible(gameObject, 0.1f));
+            gameObject.SetActive(false);
         }
         else if (hit.tag.Equals("ExpendableBox"))
         {
             Debug.Log("ExpendableBox Hit!");
-            StartCoroutine(BulletInvisible(gameObject, 0.1f));
-        }
-        else if (hit.tag.Equals("Untagged"))
-        {
-            Debug.Log("기타 명중");
-            StartCoroutine(BulletInvisible(gameObject, 0.1f));
+            gameObject.SetActive(false);
         }
         else
         {
-            StartCoroutine(BulletInvisible(gameObject, 2.0f));
+            Debug.Log("기타 명중");
         }
-    }
-
-    IEnumerator BulletInvisible(GameObject _obj, float _time)
-    {
-        yield return new WaitForSeconds(_time);
-        _obj.SetActive(false);
     }
 }
