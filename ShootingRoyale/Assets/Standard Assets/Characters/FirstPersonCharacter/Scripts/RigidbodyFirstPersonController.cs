@@ -78,6 +78,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 
         public Camera cam;
+        Transform gunPos;
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
@@ -127,6 +128,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
+            gunPos = transform.Find("Player").Find("GunPos");
+            mouseLook.Init (transform, gunPos);
         }
 
 
@@ -235,6 +238,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float oldYRotation = transform.eulerAngles.y;
 
             mouseLook.LookRotation (transform, cam.transform);
+            mouseLook.LookRotation (transform, gunPos);
 
             if (m_IsGrounded || advancedSettings.airControl)
             {
