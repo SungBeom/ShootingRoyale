@@ -18,17 +18,13 @@ public class ShootGun : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
         if (shootPossible == true)
         {
-            /*GunPos.transform.GetChild(selected).GetComponent<Animator>().SetTrigger("Shoot_t");
-            GunPos.GetComponent<GunController>().Shoot(selected);
-            StartCoroutine(ShootEffect());*/
+            if (GunPos.GetComponent<GunController>().currentBullet == 0) { return; }
             StartCoroutine(ShootDelay(GunPos.GetComponent<GunController>().guns[selected].shootDelay));
         }
-        else { return; }
     }
 
     IEnumerator ShootDelay(float time)
     {
-        //Debug.Log("진입");
         GunPos.transform.GetChild(selected).GetComponent<Animator>().SetTrigger("Shoot_t");
         GunPos.GetComponent<GunController>().Shoot(selected);
         StartCoroutine(ShootEffect());

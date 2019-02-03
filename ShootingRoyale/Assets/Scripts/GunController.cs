@@ -21,12 +21,6 @@ public class GunController : MonoBehaviour
     public Text text;
     int temp;
 
-    /*void Start()
-    {
-        //makePool = makePool.GetComponent<MakePool>();
-        //shootGun = shootGun.GetComponent<ShootGun>();
-    }*/
-
     public void Change()
     {
         //guns[temp].SetActive(false);
@@ -47,7 +41,7 @@ public class GunController : MonoBehaviour
     }
 
     // 총을 쏘는 함수- void(int)
-    public void Shoot(int num)
+    public void Shoot(int num)      // shootGun 에서 호출 됨
     {
         // 아래의 코드는 현재 테스트 코드, pool을 사용하는 코드로 변경할 것
         // num은 어떤 총의 총알을 쏘느냐에 대한 정보
