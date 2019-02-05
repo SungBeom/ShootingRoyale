@@ -7,22 +7,21 @@ using System;
 
 public class Reload : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
-    public GameObject GunPos;
+    public GameObject gunPos;
     public Text text;
     public ShootGun shootGun;
 
     GunController gunController;
     int selected;
-    int maxBullet;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        selected = GunPos.GetComponent<GunController>().selected;
-        maxBullet = GunPos.GetComponent<GunController>().guns[selected].bulletCount;
+        gunController = gunPos.GetComponent<GunController>();
+        selected = gunPos.GetComponent<GunController>().selected;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        StartCoroutine(gunController.ReloadBullet(GunPos.GetComponent<GunController>().guns[selected].reloadDelay));
+        StartCoroutine(gunController.ReloadBullet(gunController.guns[selected].reloadDelay));
     }
 }

@@ -11,26 +11,25 @@ public class GunController : MonoBehaviour
     // 테스트용 bullet, GunManager의 pool에서 가져오는 것으로 변경할 것
     //public GameObject bulletPrefab;
 
-    public MakePool makePool;  // poolManager 넣는 장소
+    public MakePool poolManager;    // poolManager 넣는 장소
     public ShootGun shootGun;
 
-    [Range(0, 3)]               // 4 대신 (guns.Length - 1)을 넣는 것이 합당함
+    [Range(0, 3)]                   // 4 대신 (guns.Length - 1)을 넣는 것이 합당함
     public int selected;
-    public int currentBullet;
-    public string maxBullet;
     public Text text;
+    int currentBullet;
+    string maxBullet;
     int temp;
 
     public void Change()
     {
-        //guns[temp].SetActive(false);
-        //guns[selected].SetActive(true);
         guns[temp].gunPrefab.SetActive(false);
         guns[selected].gunPrefab.SetActive(true);
         temp = selected;
+
         shootGun.shootPossible = true;
         currentBullet = guns[selected].bulletCount;
-        maxBullet = guns[selected].bulletCount.ToString();
+        maxBullet = currentBullet.ToString();
         text.text = maxBullet + "/" + maxBullet;
     }
 
@@ -40,18 +39,11 @@ public class GunController : MonoBehaviour
         Change();
     }
 
-    // 총을 쏘는 함수- void(int)
-    public void Shoot(int num)      // shootGun 에서 호출 됨
+    public void Shoot(int num)
     {
-        // 아래의 코드는 현재 테스트 코드, pool을 사용하는 코드로 변경할 것
-        // num은 어떤 총의 총알을 쏘느냐에 대한 정보
-        //GameObject bullet = Instantiate(bulletPrefab, Camera.main.transform.position, Camera.main.transform.rotation);
-        //bulletPrefab.transform.position = Camera.main.transform.position;
-        //bulletPrefab.transform.rotation = Camera.main.transform.rotation;
-        currentBullet--;
-        text.text = currentBullet.ToString() + "/" + maxBullet;
+        text.text = (--currentBullet).ToString() + "/" + maxBullet;
 
-        GameObject bullet = makePool.poolList[num].Dequeue();
+        GameObject bullet = poolManager.poolList[num].Dequeue();
         bullet.transform.position = Camera.main.transform.position;
         bullet.transform.rotation = Camera.main.transform.rotation;
 
@@ -61,33 +53,40 @@ public class GunController : MonoBehaviour
         bullet.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * guns[selected].bulletSpeed);
 
         StartCoroutine(AppearBullet(bullet));
-        StartCoroutine(BulletInvisibleDelay(bullet, guns[selected].bulletDuration, num));
+        StartCoroutine(DisappearBullet(bullet, guns[selected].bulletDuration, num));
 
-        if (currentBullet == 0) { StartCoroutine(ReloadBullet(guns[selected].reloadDelay)); }
+        if (currentBullet == 0)
+        {
+            // Shoot을 멈추고(shootPosible이 true가 되는 것을 방지), reload를 실행
+            StopCoroutine(shootGun.Shoot(shootGun.gunPos.GetComponent<GunController>().guns[selected].shootDelay));
+            StartCoroutine(ReloadBullet(guns[selected].reloadDelay));
+        }
     }
 
     IEnumerator AppearBullet(GameObject bullet)
     {
         yield return new WaitForSeconds(0.2f);
-        //bullet.SetActive(true);
         bullet.GetComponent<Renderer>().enabled = true;
     }
 
-    IEnumerator BulletInvisibleDelay(GameObject bullet, float time, int num)
+    IEnumerator DisappearBullet(GameObject bullet, float durationTime, int num)
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(durationTime);
         bullet.GetComponent<Rigidbody>().velocity = Vector3.zero;
         bullet.SetActive(false);
-        makePool.poolList[num].Enqueue(bullet);
+        poolManager.poolList[num].Enqueue(bullet);
     }
 
-    public IEnumerator ReloadBullet(float time)
+    public IEnumerator ReloadBullet(float reloadTime)
     {
+        // 코드 변경 필요
         shootGun.shootPossible = false;
-        yield return new WaitForSeconds(time);
-        currentBullet = int.Parse(maxBullet);
-        text.text = maxBullet + "/" + maxBullet;
+        Debug.Log(currentBullet);
+
+        yield return new WaitForSeconds(reloadTime);
         if (currentBullet != 0) shootGun.shootPossible = true;
+        int.TryParse(maxBullet, out currentBullet);
+        text.text = currentBullet + "/" + maxBullet;
     }
 
     [System.Serializable]

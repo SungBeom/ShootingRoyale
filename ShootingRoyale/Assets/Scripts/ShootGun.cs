@@ -5,40 +5,42 @@ using UnityEngine.EventSystems;
 
 public class ShootGun : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
-    public GameObject GunPos;
+    public GameObject gunPos;
     GunController gunController;
-    public bool shootPossible = false;
+    public bool shootPossible;
     int selected;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        selected = GunPos.GetComponent<GunController>().selected;
+        selected = gunPos.GetComponent<GunController>().selected;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (shootPossible == true)
         {
-            StartCoroutine(ShootDelay(GunPos.GetComponent<GunController>().guns[selected].shootDelay));
+            StartCoroutine(Shoot(gunPos.GetComponent<GunController>().guns[selected].shootDelay));
         }
     }
 
-    IEnumerator ShootDelay(float time)
+    public IEnumerator Shoot(float delayTime)
     {
-        GunPos.transform.GetChild(selected).GetComponent<Animator>().SetTrigger("Shoot_t");
-        GunPos.GetComponent<GunController>().Shoot(selected);
-        StartCoroutine(ShootEffect());
         shootPossible = false;
-        yield return new WaitForSeconds(time);
+        gunPos.transform.GetChild(selected).GetComponent<Animator>().SetTrigger("Shoot_t");
+        gunPos.GetComponent<GunController>().Shoot(selected);
+        StartCoroutine(ShootEffect());
+
+        yield return new WaitForSeconds(delayTime);
         shootPossible = true;
     }
 
     IEnumerator ShootEffect()
     {
-        ParticleSystem ps = GunPos.transform.GetChild(selected).Find("Bullet Spawn").GetChild(0).GetComponent<ParticleSystem>();
+        ParticleSystem ps = gunPos.transform.GetChild(selected).Find("Bullet Spawn").GetChild(0).GetComponent<ParticleSystem>();
 
         ps.Clear();
         ps.Play();
+
         yield return new WaitForSeconds(0.1f);
         ps.Stop();
     }
