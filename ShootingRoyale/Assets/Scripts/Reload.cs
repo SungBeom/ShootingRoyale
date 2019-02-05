@@ -9,9 +9,11 @@ public class Reload : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
     public GameObject GunPos;
     public Text text;
+    public ShootGun shootGun;
+
+    GunController gunController;
     int selected;
     int maxBullet;
-    public ShootGun shootGun ;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -21,16 +23,6 @@ public class Reload : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        StartCoroutine(ReloadBullet(GunPos.GetComponent<GunController>().guns[selected].reloadDelay));
-    }
-
-    IEnumerator ReloadBullet(float time)
-    {
-        shootGun.shootPossible = false;
-        yield return new WaitForSeconds(time);
-        GunPos.GetComponent<GunController>().currentBullet = maxBullet;
-        text.text = maxBullet + "/" + maxBullet;
-        shootGun.shootPossible = true;
-
+        StartCoroutine(gunController.ReloadBullet(GunPos.GetComponent<GunController>().guns[selected].reloadDelay));
     }
 }

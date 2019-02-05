@@ -409,6 +409,7 @@ GameObject:
   - component: {fileID: 7467094710900361632}
   - component: {fileID: 5793675152972615163}
   - component: {fileID: 7004126615417679492}
+  - component: {fileID: 8922331563942817550}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -479,6 +480,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8922331563942817550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910438791960674373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a329ba601920b48a1b22da62f7efa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPoint: 0
+  slider: {fileID: 4476522221903605605}
 --- !u!1 &4397118750137745306
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,8 +616,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guns: []
-  bulletPrefab: {fileID: 0}
+  makePool: {fileID: 0}
+  shootGun: {fileID: 0}
   selected: 0
+  currentBullet: 0
+  maxBullet: 
+  text: {fileID: 0}
 --- !u!1 &6781188859000395647
 GameObject:
   m_ObjectHideFlags: 0

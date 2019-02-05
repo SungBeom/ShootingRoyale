@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class ShootGun : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
     public GameObject GunPos;
+    GunController gunController;
     public bool shootPossible = false;
     int selected;
 
@@ -18,7 +19,6 @@ public class ShootGun : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
         if (shootPossible == true)
         {
-            if (GunPos.GetComponent<GunController>().currentBullet == 0) { return; }
             StartCoroutine(ShootDelay(GunPos.GetComponent<GunController>().guns[selected].shootDelay));
         }
     }

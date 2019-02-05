@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Bullet : MonoBehaviour
 {
     public int damage;
-    // 전부 pool에서 빼고 넣는 코드로 변경해야 함
+
     void OnTriggerEnter(Collider col)
     {
         var hit = col.gameObject;
@@ -15,8 +15,9 @@ public class Bullet : MonoBehaviour
         // 네트워크 코드로 조절해야 할 듯함
         if (hit.tag.Equals("Player"))
         {
-            hit.transform.Find("Canvas").Find("Health Slider").GetComponent<Slider>().value -= damage;
-            gameObject.SetActive(false);
+            //hit.transform.Find("Player").Find("Canvas").Find("Health Slider").GetComponent<Slider>().value -= damage;
+            hit.transform.Find("Player").Find("Canvas").Find("Health Slider").GetComponent<Hp>().GainDamage(damage);
+            //gameObject.SetActive(false);
         }
         else if (hit.tag.Equals("GunBox"))
         {

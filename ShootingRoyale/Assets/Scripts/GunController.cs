@@ -68,7 +68,8 @@ public class GunController : MonoBehaviour
 
     IEnumerator AppearBullet(GameObject bullet)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
+        //bullet.SetActive(true);
         bullet.GetComponent<Renderer>().enabled = true;
     }
 
@@ -80,14 +81,13 @@ public class GunController : MonoBehaviour
         makePool.poolList[num].Enqueue(bullet);
     }
 
-    IEnumerator ReloadBullet(float time)
+    public IEnumerator ReloadBullet(float time)
     {
         shootGun.shootPossible = false;
         yield return new WaitForSeconds(time);
         currentBullet = int.Parse(maxBullet);
         text.text = maxBullet + "/" + maxBullet;
-        shootGun.shootPossible = true;
-
+        if (currentBullet != 0) shootGun.shootPossible = true;
     }
 
     [System.Serializable]
