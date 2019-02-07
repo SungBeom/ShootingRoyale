@@ -10,16 +10,22 @@ public class ShootGun : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     public bool shootPossible;
     int selected;
 
+    void Start()
+    {
+        gunController = gunPos.GetComponent<GunController>();
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        selected = gunPos.GetComponent<GunController>().selected;
+        selected = gunController.selected;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (shootPossible == true)
         {
-            StartCoroutine(Shoot(gunPos.GetComponent<GunController>().guns[selected].shootDelay));
+            if (gunController.currentBullet == 0) return;
+            else StartCoroutine(Shoot(gunController.guns[selected].shootDelay));
         }
     }
 
@@ -27,7 +33,7 @@ public class ShootGun : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
         shootPossible = false;
         gunPos.transform.GetChild(selected).GetComponent<Animator>().SetTrigger("Shoot_t");
-        gunPos.GetComponent<GunController>().Shoot(selected);
+        gunController.Shoot(selected);
         StartCoroutine(ShootEffect());
 
         yield return new WaitForSeconds(delayTime);
