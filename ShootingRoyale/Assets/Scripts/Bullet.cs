@@ -16,7 +16,8 @@ public class Bullet : MonoBehaviour
         if (hit.tag.Equals("Player"))
         {
             //hit.transform.Find("Player").Find("Canvas").Find("Health Slider").GetComponent<Slider>().value -= damage;
-            hit.transform.Find("Player").Find("Canvas").Find("Health Slider").GetComponent<Hp>().GainDamage(damage);
+            //hit.transform.Find("Player").Find("Canvas").Find("Health Slider").GetComponent<Hp>().GainDamage(damage);
+            hit.transform.Find("Player").Find("Canvas").Find("Health Slider").GetComponent<HpControl>().GainDamage(damage);
             //gameObject.SetActive(false);
         }
         else if (hit.tag.Equals("GunBox"))

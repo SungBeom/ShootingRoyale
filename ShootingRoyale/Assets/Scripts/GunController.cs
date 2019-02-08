@@ -46,6 +46,7 @@ public class GunController : MonoBehaviour
 
         bullet.SetActive(true);
         bullet.GetComponent<Renderer>().enabled = false;
+        bullet.GetComponent<Collider>().enabled = false;
 
         bullet.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * guns[selected].bulletSpeed);
 
@@ -58,8 +59,9 @@ public class GunController : MonoBehaviour
 
     IEnumerator AppearBullet(GameObject bullet)
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         bullet.GetComponent<Renderer>().enabled = true;
+        bullet.GetComponent<Collider>().enabled = true;
     }
 
     IEnumerator DisappearBullet(GameObject bullet, float durationTime, int num)

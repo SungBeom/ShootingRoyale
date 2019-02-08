@@ -409,7 +409,6 @@ GameObject:
   - component: {fileID: 7467094710900361632}
   - component: {fileID: 5793675152972615163}
   - component: {fileID: 7004126615417679492}
-  - component: {fileID: 8922331563942817550}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -480,20 +479,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &8922331563942817550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3910438791960674373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a329ba601920b48a1b22da62f7efa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitPoint: 0
-  slider: {fileID: 4476522221903605605}
 --- !u!1 &4397118750137745306
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,12 +601,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guns: []
-  makePool: {fileID: 0}
+  poolManager: {fileID: 0}
   shootGun: {fileID: 0}
   selected: 0
-  currentBullet: 0
-  maxBullet: 
   text: {fileID: 0}
+  currentBullet: 0
 --- !u!1 &6781188859000395647
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,6 +756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4476522221903605605}
   - component: {fileID: 3882675858025711337}
+  - component: {fileID: 9092401504874980924}
   m_Layer: 5
   m_Name: Health Slider
   m_TagString: Untagged
@@ -849,6 +834,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &9092401504874980924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7404564303195621888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b01b57d7bcbb8824ca744ab9e9994621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  hpUI: {fileID: 0}
 --- !u!1 &8747114200675950519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,16 +1034,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5780035441237895981}
     m_Modifications:
-    - target: {fileID: 177491021777330864, guid: 63e494209e8b50049ac477bf81422e01,
-        type: 3}
-      propertyPath: m_Name
-      value: Ak-47
-      objectReference: {fileID: 0}
-    - target: {fileID: 177491021777330864, guid: 63e494209e8b50049ac477bf81422e01,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9187069980610011750, guid: 63e494209e8b50049ac477bf81422e01,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1098,6 +1087,16 @@ PrefabInstance:
     - target: {fileID: 9187069980610011750, guid: 63e494209e8b50049ac477bf81422e01,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177491021777330864, guid: 63e494209e8b50049ac477bf81422e01,
+        type: 3}
+      propertyPath: m_Name
+      value: Ak-47
+      objectReference: {fileID: 0}
+    - target: {fileID: 177491021777330864, guid: 63e494209e8b50049ac477bf81422e01,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1195,16 +1194,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5780035441237895981}
     m_Modifications:
-    - target: {fileID: 8689101814226938319, guid: 717f6d7b1ca06f048a6a5f712a49e955,
-        type: 3}
-      propertyPath: m_Name
-      value: M4A1 Sopmod
-      objectReference: {fileID: 0}
-    - target: {fileID: 8689101814226938319, guid: 717f6d7b1ca06f048a6a5f712a49e955,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3624928722593813663, guid: 717f6d7b1ca06f048a6a5f712a49e955,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1258,6 +1247,16 @@ PrefabInstance:
     - target: {fileID: 3624928722593813663, guid: 717f6d7b1ca06f048a6a5f712a49e955,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689101814226938319, guid: 717f6d7b1ca06f048a6a5f712a49e955,
+        type: 3}
+      propertyPath: m_Name
+      value: M4A1 Sopmod
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689101814226938319, guid: 717f6d7b1ca06f048a6a5f712a49e955,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
