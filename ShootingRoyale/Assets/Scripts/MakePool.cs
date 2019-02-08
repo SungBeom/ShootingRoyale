@@ -36,7 +36,7 @@ public class MakePool : MonoBehaviour
         poolList[3] = new Queue<GameObject>(SetBullet(bulletPrefab[3], bulletCount[3], gunPos.GetComponent<GunController>().guns[3].bulletDamage, "UMP-45"));
     }
 
-    Queue<GameObject> SetBullet(GameObject _Bullet, int _BulletCount, int _BulletDamage, string _name)
+    Queue<GameObject> SetBullet(GameObject _Bullet, int _BulletCount, float _BulletDamage, string _name)
     {
         bulletPool = new Queue<GameObject>();
         GameObject Magazine = new GameObject(_name);

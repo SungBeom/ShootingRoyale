@@ -45,7 +45,9 @@ public class GunController : MonoBehaviour
         bullet.transform.rotation = Camera.main.transform.rotation;
 
         bullet.SetActive(true);
-        bullet.GetComponent<Renderer>().enabled = false;
+        Renderer[] bulletRenderers = bullet.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < bulletRenderers.Length; i++)
+            bulletRenderers[i].enabled = false;
         bullet.GetComponent<Collider>().enabled = false;
 
         bullet.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * guns[selected].bulletSpeed);
@@ -59,8 +61,13 @@ public class GunController : MonoBehaviour
 
     IEnumerator AppearBullet(GameObject bullet)
     {
-        yield return new WaitForSeconds(0.5f);
-        bullet.GetComponent<Renderer>().enabled = true;
+        // 0.5초 뒤에 보임
+        // 이것을 거리로 환산하고 싶음, 대략 1의 거리 뒤에 보이게 하고 싶음
+        // 1초에 speed를 간다고 가정하면 1을 가고 싶을 때, 1초 / 스피드는 = 거리 1
+        yield return new WaitForSeconds(75f / guns[selected].bulletSpeed);
+        Renderer[] bulletRenderers = bullet.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < bulletRenderers.Length; i++)
+            bulletRenderers[i].enabled = true;
         bullet.GetComponent<Collider>().enabled = true;
     }
 
@@ -86,12 +93,13 @@ public class GunController : MonoBehaviour
     {
         public GameObject gunPrefab;
 
+        public float bulletDamage;
+        public int bulletCount;
+
         public float bulletSpeed;
         public float bulletDuration;
+
         public float shootDelay;
         public float reloadDelay;
-
-        public int bulletCount;
-        public int bulletDamage;
     }
 }

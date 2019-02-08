@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour
 {
-    public int damage;
+    public float damage;
 
     void OnTriggerEnter(Collider col)
     {
