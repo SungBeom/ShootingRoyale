@@ -35,6 +35,7 @@ public class ShootGun : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
         gunPos.transform.GetChild(selected).GetComponent<Animator>().SetTrigger("Shoot_t");
         gunController.Shoot(selected);
         StartCoroutine(ShootEffect());
+        StartCoroutine(ShootSound());
 
         yield return new WaitForSeconds(delayTime);
         shootPossible = true;
@@ -49,5 +50,15 @@ public class ShootGun : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 
         yield return new WaitForSeconds(0.1f);
         ps.Stop();
+    }
+
+    IEnumerator ShootSound()
+    {
+        AudioSource source = gunPos.transform.GetChild(selected).Find("Bullet Spawn").GetChild(1).GetComponent<AudioSource>();
+
+        source.Play();
+
+        yield return new WaitForSeconds(0.5f);
+        source.Stop();
     }
 }
